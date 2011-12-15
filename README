@@ -1,0 +1,3 @@
+# Agenda service implemented as asynchronous REST service.
+
+It is based on Jersey and Netty
