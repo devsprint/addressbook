@@ -1,0 +1,19 @@
+package AddressBookService;
+
+option java_package = "com.devsprint.learning.agenda";
+option java_outer_classname = "AddressBookProtos";
+option optimize_for = CODE_SIZE;
+
+message AddressBook {
+	repeated Person person =1;
+}
+
+message Person {
+	required string id =1;
+	required string first_name =2;
+	required string last_name = 3;
+	required string email = 4;
+	required string phoneNumber = 5;
+	optional string mailAddress =6;
+	optional string notes = 7;
+}
