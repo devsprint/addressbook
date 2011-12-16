@@ -15,10 +15,10 @@ import static org.jboss.netty.channel.Channels.pipeline;
 public class HttpAsyncServerChannelPipelineFactory implements
 		ChannelPipelineFactory {
 
-	private final JarseyHandler jerseyHandler;
+	private final JerseyHandler jerseyHandler;
 
 	public HttpAsyncServerChannelPipelineFactory(
-			final JarseyHandler jerseyHandler) {
+			final JerseyHandler jerseyHandler) {
 		this.jerseyHandler = jerseyHandler;
 	}
 

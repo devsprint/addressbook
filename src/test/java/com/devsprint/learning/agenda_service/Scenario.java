@@ -36,6 +36,7 @@ public class Scenario extends JerseyTest {
 		clientConfig = new DefaultClientConfig(ContactProviderReader.class,
 				ContactProviderWriter.class, ContactsProviderReader.class,
 				ContactsProviderWriter.class, ServiceError.class);
+		
 	}
 
 	public Scenario() {
