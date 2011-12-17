@@ -1,5 +1,10 @@
 package com.devsprint.learning.agenda_service;
 
+/**
+ * Contact model
+ * @author gciuloaica
+ *
+ */
 public class Contact {
 
 	private final ContactId contactId;
@@ -10,7 +15,7 @@ public class Contact {
 	private String mailAddress;
 	private String notes;
 
-	public Contact(ContactId id) {
+	public Contact(final ContactId id) {
 		this.contactId = id;
 	}
 
@@ -22,7 +27,7 @@ public class Contact {
 		return firstName;
 	}
 
-	public Contact setFirstName(String firstName) {
+	public Contact setFirstName(final String firstName) {
 		this.firstName = firstName;
 		return this;
 	}
@@ -31,7 +36,7 @@ public class Contact {
 		return lastName;
 	}
 
-	public Contact setLastName(String lastName) {
+	public Contact setLastName(final String lastName) {
 		this.lastName = lastName;
 		return this;
 	}
@@ -40,7 +45,7 @@ public class Contact {
 		return email;
 	}
 
-	public Contact setEmail(String email) {
+	public Contact setEmail(final String email) {
 		this.email = email;
 		return this;
 	}
@@ -49,7 +54,7 @@ public class Contact {
 		return phoneNumber;
 	}
 
-	public Contact setPhoneNumber(String phoneNumber) {
+	public Contact setPhoneNumber(final String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 		return this;
 	}
@@ -58,7 +63,7 @@ public class Contact {
 		return mailAddress;
 	}
 
-	public Contact setMailAddress(String mailAddress) {
+	public Contact setMailAddress(final String mailAddress) {
 		this.mailAddress = mailAddress;
 		return this;
 	}
@@ -67,7 +72,7 @@ public class Contact {
 		return notes;
 	}
 
-	public Contact setNotes(String notes) {
+	public Contact setNotes(final String notes) {
 		this.notes = notes;
 		return this;
 	}
@@ -96,7 +101,7 @@ public class Contact {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)

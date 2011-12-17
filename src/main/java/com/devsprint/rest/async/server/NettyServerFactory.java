@@ -19,21 +19,25 @@ import com.sun.jersey.api.core.ResourceConfig;
  * 
  */
 public final class NettyServerFactory {
+	
+	private NettyServerFactory(){
+		
+	}
 
-	public static NettyServer create(ResourceConfig resourceConfig, URI baseUri) {
-		JerseyHandler jerseyHandler = ContainerFactory.createContainer(
+	public static NettyServer create(final ResourceConfig resourceConfig,final URI baseUri) {
+		final JerseyHandler jerseyHandler = ContainerFactory.createContainer(
 				JerseyHandler.class, resourceConfig);
 
 		return new NettyServer(getPipelineFactory(jerseyHandler),
 				getLocalSocket(baseUri));
 	}
 
-	private static SocketAddress getLocalSocket(URI baseUri) {
+	private static SocketAddress getLocalSocket(final URI baseUri) {
 		return new InetSocketAddress(baseUri.getHost(), baseUri.getPort());
 	}
 
 	private static ChannelPipelineFactory getPipelineFactory(
-			JerseyHandler jerseyHandler) {
+			final JerseyHandler jerseyHandler) {
 		return new JaxRsServerChannelPipelineFactory(jerseyHandler);
 
 	}

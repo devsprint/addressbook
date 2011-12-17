@@ -25,15 +25,14 @@ public class NettyTestContainer implements TestContainer {
 
 	private final URI baseUri;
 
-	private final ResourceConfig resourceConfig;
-
 	private final NettyServer nettyServer;
 
-	public NettyTestContainer(URI baseUri, LowLevelAppDescriptor ad) {
+	public NettyTestContainer(final URI baseUri,
+			final LowLevelAppDescriptor appDescriptor) {
 		this.baseUri = baseUri;
 		LOGGER.info("Creating low level http container configured at the base URI "
 				+ this.baseUri);
-		resourceConfig = ad.getResourceConfig();
+		final ResourceConfig resourceConfig = appDescriptor.getResourceConfig();
 		nettyServer = NettyServerFactory.create(resourceConfig, this.baseUri);
 	}
 

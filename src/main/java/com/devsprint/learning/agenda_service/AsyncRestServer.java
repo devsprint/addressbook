@@ -14,13 +14,17 @@ import com.sun.jersey.api.core.ResourceConfig;
  * Start an Async rest server.
  * 
  */
-public class AsyncRestServer {
+public final class AsyncRestServer {
 
 	private static final String RESOURCES_PACKAGE = "com.devsprint.learning.agenda_service";
 	private static final int PORT = 8080;
 	private static final String HOSTNAME = "localhost";
 
-	private static NettyServer SERVER;
+	private static NettyServer server;
+
+	private AsyncRestServer() {
+
+	}
 
 	/**
 	 * Starts a server, bind to a local port and add the shutdown hook.
@@ -28,13 +32,13 @@ public class AsyncRestServer {
 	 * @param args
 	 *            - empty
 	 */
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		// create server configuration
 
-		StringBuilder baseUri = new StringBuilder("http://");
+		final StringBuilder baseUri = new StringBuilder("http://");
 		baseUri.append(HOSTNAME).append(":").append(String.valueOf(PORT))
 				.append("/");
-		ResourceConfig resourceConfig = getResourceConfiguration(baseUri
+		final ResourceConfig resourceConfig = getResourceConfiguration(baseUri
 				.toString());
 
 		// start server
@@ -49,9 +53,9 @@ public class AsyncRestServer {
 		});
 	}
 
-	protected static void startServer(ResourceConfig resourceConfig, URI baseUri) {
-		SERVER = NettyServerFactory.create(resourceConfig, baseUri);
-		SERVER.startServer();
+	protected static void startServer(final ResourceConfig resourceConfig, final URI baseUri) {
+		server = NettyServerFactory.create(resourceConfig, baseUri);
+		server.startServer();
 	}
 
 	/**
@@ -62,8 +66,8 @@ public class AsyncRestServer {
 	 *            - base uri
 	 * @return JerseyHandler instance.
 	 */
-	private static ResourceConfig getResourceConfiguration(String baseUri) {
-		Map<String, Object> props = new HashMap<String, Object>();
+	private static ResourceConfig getResourceConfiguration(final String baseUri) {
+		final Map<String, Object> props = new HashMap<String, Object>();
 		props.put(PackagesResourceConfig.PROPERTY_PACKAGES, RESOURCES_PACKAGE);
 		props.put(JerseyHandler.PROPERTY_BASE_URI, baseUri);
 		return new PackagesResourceConfig(props);
@@ -71,6 +75,6 @@ public class AsyncRestServer {
 	}
 
 	protected static void stopServer() {
-		SERVER.stopServer();
+		server.stopServer();
 	}
 }

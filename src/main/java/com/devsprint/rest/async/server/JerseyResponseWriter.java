@@ -27,28 +27,30 @@ import com.sun.jersey.spi.container.ContainerResponseWriter;
  */
 public class JerseyResponseWriter implements ContainerResponseWriter {
 
-	private final Channel channel;
-	private HttpResponse response;
+	private final transient Channel channel;
+	private transient HttpResponse response;
 
-	public JerseyResponseWriter(Channel channel) {
+	public JerseyResponseWriter(final Channel channel) {
 		this.channel = channel;
 	}
 
 	@Override
-	public OutputStream writeStatusAndHeaders(long contentLength,
-			ContainerResponse containerResponse) throws IOException {
+	public OutputStream writeStatusAndHeaders(final long contentLength,
+			final ContainerResponse containerResponse) throws IOException {
 		response = new DefaultHttpResponse(HttpVersion.HTTP_1_1,
 				HttpResponseStatus.valueOf(containerResponse.getStatus()));
-
-		for (Map.Entry<String, List<Object>> e : containerResponse
+		final List<String> values = new ArrayList<String>();
+		for (Map.Entry<String, List<Object>> header : containerResponse
 				.getHttpHeaders().entrySet()) {
-			List<String> values = new ArrayList<String>();
-			for (Object v : e.getValue())
-				values.add(ContainerResponse.getHeaderValue(v));
-			response.setHeader(e.getKey(), values);
+
+			for (Object value : header.getValue()) {
+				values.add(ContainerResponse.getHeaderValue(value));
+			}
+			response.setHeader(header.getKey(), values);
+			values.clear();
 		}
 
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+		final ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		response.setContent(buffer);
 		return new ChannelBufferOutputStream(buffer);
 
@@ -57,7 +59,6 @@ public class JerseyResponseWriter implements ContainerResponseWriter {
 	@Override
 	public void finish() throws IOException {
 		channel.write(response).addListener(ChannelFutureListener.CLOSE);
-
 	}
 
 }

@@ -19,12 +19,16 @@ import org.slf4j.LoggerFactory;
  * @author gciuloaica
  * 
  */
-public class InMemoryContactsStorage implements ContactsStorage {
+public final class InMemoryContactsStorage implements ContactsStorage {
 
 	private static final ContactsStorage STORAGE = new InMemoryContactsStorage();
 	private static final Map<ContactId, Contact> INTERNAL_STORAGE = new ConcurrentHashMap<ContactId, Contact>();
 	private static final Logger LOG = LoggerFactory
 			.getLogger(InMemoryContactsStorage.class);
+	
+	private InMemoryContactsStorage() {
+
+	}
 
 	public static ContactsStorage getInstance() {
 		LOG.debug("Storage id: {}", STORAGE.toString());
@@ -39,7 +43,7 @@ public class InMemoryContactsStorage implements ContactsStorage {
 	 * devsprint.learning.agenda_service.Contact)
 	 */
 	@Override
-	public ContactId addContact(Contact contact) throws PersistenceException {
+	public ContactId addContact(final Contact contact) throws PersistenceException {
 		validateContact(contact);
 		INTERNAL_STORAGE.put(contact.getContactId(), contact);
 		return contact.getContactId();
@@ -54,7 +58,7 @@ public class InMemoryContactsStorage implements ContactsStorage {
 	 * .lang.String)
 	 */
 	@Override
-	public Contact getContact(ContactId contactId) throws PersistenceException {
+	public Contact getContact(final ContactId contactId) throws PersistenceException {
 		validateContactId(contactId);
 		return INTERNAL_STORAGE.get(contactId);
 	}
@@ -67,7 +71,7 @@ public class InMemoryContactsStorage implements ContactsStorage {
 	 * .util.Set)
 	 */
 	@Override
-	public void addContacts(Set<Contact> contacts) throws PersistenceException {
+	public void addContacts(final Set<Contact> contacts) throws PersistenceException {
 		validateListOfContacts(contacts);
 		for (Contact contact : contacts) {
 			addContact(contact);
@@ -83,7 +87,7 @@ public class InMemoryContactsStorage implements ContactsStorage {
 	 * .devsprint.learning.agenda_service.ContactId)
 	 */
 	@Override
-	public void removeContact(ContactId contactId) throws PersistenceException {
+	public void removeContact(final ContactId contactId) throws PersistenceException {
 		validateContactId(contactId);
 		INTERNAL_STORAGE.remove(contactId);
 
@@ -97,7 +101,7 @@ public class InMemoryContactsStorage implements ContactsStorage {
 	 * java.util.Set)
 	 */
 	@Override
-	public void removeContacts(Set<ContactId> contactIds)
+	public void removeContacts(final Set<ContactId> contactIds)
 			throws PersistenceException {
 		validateContactIds(contactIds);
 		for (ContactId contactId : contactIds) {
@@ -114,7 +118,7 @@ public class InMemoryContactsStorage implements ContactsStorage {
 	 * .devsprint.learning.agenda_service.Contact)
 	 */
 	@Override
-	public void patchContact(Contact contact) throws PersistenceException {
+	public void patchContact(final Contact contact) throws PersistenceException {
 		addContact(contact);
 
 	}
@@ -127,7 +131,7 @@ public class InMemoryContactsStorage implements ContactsStorage {
 	 * .util.Set)
 	 */
 	@Override
-	public void patchContacts(Set<Contact> contacts)
+	public void patchContacts(final Set<Contact> contacts)
 			throws PersistenceException {
 		addContacts(contacts);
 
@@ -150,11 +154,11 @@ public class InMemoryContactsStorage implements ContactsStorage {
 	 * com.devsprint.learning.agenda_service.ContactsStorage#getContacts(int)
 	 */
 	@Override
-	public Set<Contact> getContacts(int count) throws PersistenceException {
+	public Set<Contact> getContacts(final int count) throws PersistenceException {
 		final Set<Contact> contacts = new HashSet<Contact>(count);
-		Collection<Contact> contactList = INTERNAL_STORAGE.values();
+		final Collection<Contact> contactList = INTERNAL_STORAGE.values();
 		if (!contactList.isEmpty()) {
-			Iterator<Contact> iterator = contactList.iterator();
+			final Iterator<Contact> iterator = contactList.iterator();
 
 			for (int i = 0; i < count; i++) {
 				if (iterator.hasNext()) {
@@ -171,11 +175,9 @@ public class InMemoryContactsStorage implements ContactsStorage {
 		INTERNAL_STORAGE.clear();
 	}
 
-	private InMemoryContactsStorage() {
+	
 
-	}
-
-	private void validateContact(Contact contact) throws PersistenceException {
+	private void validateContact(final Contact contact) throws PersistenceException {
 		if (contact == null) {
 			throw new IllegalArgumentException("Contact could not be null.");
 		}
@@ -186,14 +188,14 @@ public class InMemoryContactsStorage implements ContactsStorage {
 
 	}
 
-	private void validateListOfContacts(Set<Contact> contacts)
+	private void validateListOfContacts(final Set<Contact> contacts)
 			throws PersistenceException {
 		if (contacts == null) {
 			throw new IllegalArgumentException("Contacts could not be null.");
 		}
 	}
 
-	private void validateContactId(ContactId contactId)
+	private void validateContactId(final ContactId contactId)
 			throws PersistenceException {
 		if (contactId == null) {
 			throw new IllegalArgumentException("ContactId could not be null.");
@@ -205,7 +207,7 @@ public class InMemoryContactsStorage implements ContactsStorage {
 
 	}
 
-	private void validateContactIds(Set<ContactId> contactIds) {
+	private void validateContactIds(final Set<ContactId> contactIds) {
 		if (contactIds == null) {
 			throw new IllegalArgumentException("ContactIds could not be null.");
 		}

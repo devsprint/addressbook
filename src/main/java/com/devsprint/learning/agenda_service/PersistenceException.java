@@ -11,7 +11,7 @@ public class PersistenceException extends Exception {
 	 * @param message
 	 *            - exception message
 	 */
-	public PersistenceException(String message) {
+	public PersistenceException(final String message) {
 		super(message);
 	}
 

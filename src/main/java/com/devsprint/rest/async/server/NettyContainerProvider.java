@@ -17,13 +17,15 @@ import com.sun.jersey.spi.container.WebApplication;
 public class NettyContainerProvider implements ContainerProvider<JerseyHandler> {
 
 	@Override
-	public JerseyHandler createContainer(Class<JerseyHandler> type,
-			ResourceConfig resourceConfig, WebApplication application)
-			throws ContainerException {
-		if (type != JerseyHandler.class)
-			return null;
+	public JerseyHandler createContainer(final Class<JerseyHandler> type,
+			final ResourceConfig resourceConfig,
+			final WebApplication application) throws ContainerException {
+		JerseyHandler handler = null;
+		if (type == JerseyHandler.class) {
+			handler = new JerseyHandler(application, resourceConfig);
+		}
 
-		return new JerseyHandler(application, resourceConfig);
+		return handler;
 	}
 
 }

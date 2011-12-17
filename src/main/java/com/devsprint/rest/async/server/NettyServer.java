@@ -27,15 +27,15 @@ public final class NettyServer {
 	private static final Logger LOG = LoggerFactory
 			.getLogger(NettyServer.class);
 
-	static final ChannelGroup ALL_CHANNELS = new DefaultChannelGroup(
+	private static final ChannelGroup ALL_CHANNELS = new DefaultChannelGroup(
 			"jersey_netty_server");
 
 	private final ChannelPipelineFactory pipelineFactory;
 	private final ServerBootstrap bootstrap;
 	private final SocketAddress localSocket;
 
-	NettyServer(ChannelPipelineFactory pipelineFactory,
-			SocketAddress localSocket) {
+	NettyServer(final ChannelPipelineFactory pipelineFactory,
+			final SocketAddress localSocket) {
 		this.pipelineFactory = pipelineFactory;
 		this.localSocket = localSocket;
 		this.bootstrap = buildBootstrap();
@@ -44,13 +44,13 @@ public final class NettyServer {
 
 	public void startServer() {
 		LOG.info("Starting server....");
-		Channel serverChannel = bootstrap.bind(localSocket);
+		final Channel serverChannel = bootstrap.bind(localSocket);
 		ALL_CHANNELS.add(serverChannel);
 	}
 
 	public void stopServer() {
 		LOG.info("Stopping server....");
-		ChannelGroupFuture future = ALL_CHANNELS.close();
+		final ChannelGroupFuture future = ALL_CHANNELS.close();
 		future.awaitUninterruptibly();
 		bootstrap.getFactory().releaseExternalResources();
 		ALL_CHANNELS.clear();
@@ -58,7 +58,7 @@ public final class NettyServer {
 	}
 
 	private ServerBootstrap buildBootstrap() {
-		ServerBootstrap bootstrap = new ServerBootstrap(
+		final ServerBootstrap bootstrap = new ServerBootstrap(
 				new NioServerSocketChannelFactory(
 						Executors.newCachedThreadPool(),
 						Executors.newCachedThreadPool()));

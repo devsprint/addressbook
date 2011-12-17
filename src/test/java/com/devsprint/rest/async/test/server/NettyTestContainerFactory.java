@@ -25,13 +25,15 @@ public class NettyTestContainerFactory implements TestContainerFactory {
 	}
 
 	@Override
-	public TestContainer create(URI baseUri, AppDescriptor ad)
-			throws IllegalArgumentException {
-		if (!(ad instanceof LowLevelAppDescriptor))
+	public TestContainer create(final URI baseUri,
+			final AppDescriptor appDescriptor) throws IllegalArgumentException {
+		if (!(appDescriptor instanceof LowLevelAppDescriptor)) {
 			throw new IllegalArgumentException(
 					"The application descriptor must be an instance of LowLevelAppDescriptor");
+		}
 
-		return new NettyTestContainer(baseUri, (LowLevelAppDescriptor) ad);
+		return new NettyTestContainer(baseUri,
+				(LowLevelAppDescriptor) appDescriptor);
 	}
 
 }

@@ -15,16 +15,15 @@ import static org.jboss.netty.channel.Channels.pipeline;
 public class JaxRsServerChannelPipelineFactory implements
 		ChannelPipelineFactory {
 
-	private final JerseyHandler jerseyHandler;
+	private final transient JerseyHandler jerseyHandler;
 
-	public JaxRsServerChannelPipelineFactory(
-			final JerseyHandler jerseyHandler) {
+	public JaxRsServerChannelPipelineFactory(final JerseyHandler jerseyHandler) {
 		this.jerseyHandler = jerseyHandler;
 	}
 
 	@Override
-	public ChannelPipeline getPipeline() throws Exception {
-		ChannelPipeline pipeline = pipeline();
+	public ChannelPipeline getPipeline() {
+		final ChannelPipeline pipeline = pipeline();
 		pipeline.addLast("decoder", new HttpRequestDecoder());
 		pipeline.addLast("encoder", new HttpResponseEncoder());
 		pipeline.addLast("jerseyHandler", jerseyHandler);
