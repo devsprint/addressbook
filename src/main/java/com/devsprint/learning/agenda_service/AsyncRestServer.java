@@ -1,17 +1,12 @@
 package com.devsprint.learning.agenda_service;
 
-import java.net.InetSocketAddress;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Executors;
 
-import org.jboss.netty.bootstrap.ServerBootstrap;
-import org.jboss.netty.channel.ChannelPipelineFactory;
-import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
-
-import com.devsprint.learning.async_server.HttpAsyncServerChannelPipelineFactory;
-import com.devsprint.learning.async_server.JerseyHandler;
-import com.sun.jersey.api.container.ContainerFactory;
+import com.devsprint.rest.async.server.JerseyHandler;
+import com.devsprint.rest.async.server.NettyServer;
+import com.devsprint.rest.async.server.NettyServerFactory;
 import com.sun.jersey.api.core.PackagesResourceConfig;
 import com.sun.jersey.api.core.ResourceConfig;
 
@@ -22,7 +17,10 @@ import com.sun.jersey.api.core.ResourceConfig;
 public class AsyncRestServer {
 
 	private static final String RESOURCES_PACKAGE = "com.devsprint.learning.agenda_service";
-	private static final String BASE_URI = "http://localhost:8080/";
+	private static final int PORT = 8080;
+	private static final String HOSTNAME = "localhost";
+
+	private static NettyServer SERVER;
 
 	/**
 	 * Starts a server, bind to a local port and add the shutdown hook.
@@ -32,9 +30,15 @@ public class AsyncRestServer {
 	 */
 	public static void main(String[] args) {
 		// create server configuration
-		ChannelPipelineFactory pipelineFactory = getChannelPipelineFactory();
+
+		StringBuilder baseUri = new StringBuilder("http://");
+		baseUri.append(HOSTNAME).append(":").append(String.valueOf(PORT))
+				.append("/");
+		ResourceConfig resourceConfig = getResourceConfiguration(baseUri
+				.toString());
+
 		// start server
-		startServer(pipelineFactory);
+		startServer(resourceConfig, URI.create(baseUri.toString()));
 
 		// stop server
 		Runtime.getRuntime().addShutdownHook(new Thread() {
@@ -45,35 +49,28 @@ public class AsyncRestServer {
 		});
 	}
 
-	protected static void startServer(ChannelPipelineFactory pipelineFactory) {
-		ServerBootstrap bootstrap = new ServerBootstrap(
-				new NioServerSocketChannelFactory(
-						Executors.newCachedThreadPool(),
-						Executors.newCachedThreadPool()));
-
-		bootstrap.setPipelineFactory(pipelineFactory);
-		bootstrap.bind(new InetSocketAddress(8080));
-
+	protected static void startServer(ResourceConfig resourceConfig, URI baseUri) {
+		SERVER = NettyServerFactory.create(resourceConfig, baseUri);
+		SERVER.startServer();
 	}
 
-	private static ChannelPipelineFactory getChannelPipelineFactory() {
-		return new HttpAsyncServerChannelPipelineFactory(
-				getJerseyContainerInstance());
-	}
-
-	private static JerseyHandler getJerseyContainerInstance() {
+	/**
+	 * Create an instance of <code>JerseyHandler</code>, base on class-path
+	 * scanning.
+	 * 
+	 * @param baseUri
+	 *            - base uri
+	 * @return JerseyHandler instance.
+	 */
+	private static ResourceConfig getResourceConfiguration(String baseUri) {
 		Map<String, Object> props = new HashMap<String, Object>();
 		props.put(PackagesResourceConfig.PROPERTY_PACKAGES, RESOURCES_PACKAGE);
-		props.put(JerseyHandler.PROPERTY_BASE_URI, BASE_URI);
-		ResourceConfig resourceConfig = new PackagesResourceConfig(props);
+		props.put(JerseyHandler.PROPERTY_BASE_URI, baseUri);
+		return new PackagesResourceConfig(props);
 
-		JerseyHandler jerseyHandler = ContainerFactory.createContainer(
-				JerseyHandler.class, resourceConfig);
-		return jerseyHandler;
 	}
 
 	protected static void stopServer() {
-		// TODO Auto-generated method stub
-
+		SERVER.stopServer();
 	}
 }

@@ -1,4 +1,4 @@
-package com.devsprint.learning.async_server;
+package com.devsprint.rest.async.server;
 
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.channel.ChannelPipelineFactory;
@@ -12,12 +12,12 @@ import static org.jboss.netty.channel.Channels.pipeline;
  * @author gciuloaica
  * 
  */
-public class HttpAsyncServerChannelPipelineFactory implements
+public class JaxRsServerChannelPipelineFactory implements
 		ChannelPipelineFactory {
 
 	private final JerseyHandler jerseyHandler;
 
-	public HttpAsyncServerChannelPipelineFactory(
+	public JaxRsServerChannelPipelineFactory(
 			final JerseyHandler jerseyHandler) {
 		this.jerseyHandler = jerseyHandler;
 	}

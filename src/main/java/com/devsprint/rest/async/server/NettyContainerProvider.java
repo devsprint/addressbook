@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.devsprint.learning.async_server;
+package com.devsprint.rest.async.server;
 
 import com.sun.jersey.api.container.ContainerException;
 import com.sun.jersey.api.core.ResourceConfig;

@@ -1,4 +1,4 @@
-package com.devsprint.learning.async_server;
+package com.devsprint.rest.async.server;
 
 import java.net.URI;
 
