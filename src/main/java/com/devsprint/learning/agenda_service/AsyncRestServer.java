@@ -4,9 +4,8 @@ import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.devsprint.rest.async.server.JerseyHandler;
-import com.devsprint.rest.async.server.NettyServer;
-import com.devsprint.rest.async.server.NettyServerFactory;
+import com.devsprint.jersey.api.container.netty.NettyServer;
+import com.devsprint.jersey.api.container.netty.NettyServerFactory;
 import com.sun.jersey.api.core.PackagesResourceConfig;
 import com.sun.jersey.api.core.ResourceConfig;
 
@@ -53,7 +52,8 @@ public final class AsyncRestServer {
 		});
 	}
 
-	protected static void startServer(final ResourceConfig resourceConfig, final URI baseUri) {
+	protected static void startServer(final ResourceConfig resourceConfig,
+			final URI baseUri) {
 		server = NettyServerFactory.create(resourceConfig, baseUri);
 		server.startServer();
 	}
@@ -69,7 +69,7 @@ public final class AsyncRestServer {
 	private static ResourceConfig getResourceConfiguration(final String baseUri) {
 		final Map<String, Object> props = new HashMap<String, Object>();
 		props.put(PackagesResourceConfig.PROPERTY_PACKAGES, RESOURCES_PACKAGE);
-		props.put(JerseyHandler.PROPERTY_BASE_URI, baseUri);
+		props.put(NettyServer.PROPERTY_BASE_URI, baseUri);
 		return new PackagesResourceConfig(props);
 
 	}

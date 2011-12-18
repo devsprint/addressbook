@@ -1,3 +1,3 @@
-# Agenda service implemented as asynchronous REST service.
+# Agenda service implemented as REST service.
 
-It is based on Jersey and Netty
+It is using jersey-netty-container, implementation of a Jersey container SPI based on Netty.

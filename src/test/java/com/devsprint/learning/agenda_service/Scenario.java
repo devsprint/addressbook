@@ -6,13 +6,13 @@ package com.devsprint.learning.agenda_service;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import com.devsprint.jersey.api.netty.container.test.NettyTestContainerFactory;
 import com.devsprint.learning.agenda_service.resources.ContactProviderReader;
 import com.devsprint.learning.agenda_service.resources.ContactProviderWriter;
 import com.devsprint.learning.agenda_service.resources.ContactsProviderReader;
 import com.devsprint.learning.agenda_service.resources.ContactsProviderWriter;
 import com.devsprint.learning.agenda_service.resources.ProtocolBufferMediaType;
 import com.devsprint.learning.agenda_service.resources.ServiceError;
-import com.devsprint.rest.async.test.server.NettyTestContainerFactory;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.ClientResponse.Status;
 import com.sun.jersey.api.client.UniformInterfaceException;
