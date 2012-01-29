@@ -32,6 +32,8 @@ public final class AsyncRestServer {
 	 *            - empty
 	 */
 	public static void main(final String[] args) {
+		
+		readServerConfiguration();
 		// create server configuration
 
 		final StringBuilder baseUri = new StringBuilder("http://");
@@ -50,6 +52,11 @@ public final class AsyncRestServer {
 			}
 
 		});
+	}
+
+	private static void readServerConfiguration() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	protected static void startServer(final ResourceConfig resourceConfig,

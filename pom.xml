@@ -123,20 +123,20 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>1.6.1</version>
+			<version>1.6.4</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-core</artifactId>
-			<version>0.9.28</version>
+			<version>1.0.0</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<version>0.9.28</version>
+			<version>1.0.0</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
@@ -145,20 +145,20 @@
 			<version>2.4.1</version>
 		</dependency>
 		<dependency>
-			<groupId>org.jboss.netty</groupId>
+			<groupId>io.netty</groupId>
 			<artifactId>netty</artifactId>
-			<version>3.2.7.Final</version>
+			<version>3.3.0.Final</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.devsprint.jersey.api</groupId>
 			<artifactId>jersey-netty-container</artifactId>
-			<version>0.0.4</version>
+			<version>0.0.6</version>
 		</dependency>
 		<dependency>
 			<groupId>com.devsprint.jersey.api</groupId>
 			<artifactId>jersey-netty-test-container</artifactId>
-			<version>0.0.4</version>
+			<version>0.0.6</version>
 		</dependency>
 
 		<dependency>
@@ -176,15 +176,8 @@
 			<layout>default</layout>
 		</repository>
 		<repository>
-			<id>repository.jboss.org</id>
-			<url>https://repository.jboss.org/nexus/content/repositories/releases/</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		<repository>
 			<id>devsprint.release.repo</id>
-			<url>https://github.com/devsprint/devsprint.github.com/raw/master/releases/</url>
+			<url>https://github.com/devsprint/devsprint.github.com/raw/master/releases</url>
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
